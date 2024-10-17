@@ -64,10 +64,14 @@ def seed_data():
         print(f'Students seeded successfully')
         
     print(f'Seeding {no_of_courses} courses...')
+    Lecturer.query.all()
+    courses_available = ["Mathematics", "Physics", "Chemistry", "Biology", "Computer Science", "Geography", "History", "Literature", "Art", "Music"]
+    courses_codes = ["M101", "P102", "C103", "B104", "CS105", "G106", "H107", "L108", "A109", "M110"]
+    
     for _ in range(no_of_courses):
         course = Course(
-            name=fake.word(),
-            course_code=fake.random_int(min=10, max=15),
+            name=random.choice(courses_available),
+            course_code=random.choice(courses_codes),
             lec_id=random.randint(1, no_of_lecturers)
         )
         db.session.add(course)
