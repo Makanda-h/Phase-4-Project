@@ -47,19 +47,19 @@ class Course(db.Model, SerializerMixin):
     #  a course is taught by one lecturer
     # a course can have many students enrolled in it
     # many courses can be enrolled by many students
-    enrollments = db.relationship('Enrollment', backref='course', cascade='all, delete-orphan')
+    course_enrollments = db.relationship('Enrollment', backref='course')
     students = association_proxy('enrollments', 'student')
     
     def __repr__(self):
         return f'<Course: {self.name} Code: {self.course_code} >'
     
-class Students(db.Model, SerializerMixin):
+class Student(db.Model, SerializerMixin):
     __tablename__ = 'students'
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     email = db.Column(db.String)
-    admission_no = db.Column(db.String)
+    admission_no = db.Column(db.Integer)
     
     # a student can enroll to many courses through enrollments one to many relationship
     enrollments = db.relationship('Enrollment', backref='student', cascade='all, delete-orphan')
@@ -87,7 +87,7 @@ class Enrollment(db.Model, SerializerMixin):
     
     # many courses can be enrolled by many students
     courses = db.relationship('Course', backref='enrollments')
-    students = db.relationship('Students', backref='enrollments')
+    students = db.relationship('Student', backref = 'student_enrollments')
     
     def __repr__(self):
         return f'<Enrollment: {self.student.name} - {self.course.name}>'
