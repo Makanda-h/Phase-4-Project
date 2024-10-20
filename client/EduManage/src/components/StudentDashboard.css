@@ -1,95 +1,85 @@
-/* General dashboard container styling */
+
+/* General styling */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: url('./assets/school-background.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
 .student-dashboard {
-    font-family: 'Arial', sans-serif;
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #f8f8f8;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Header styles */
-  .student-dashboard h1 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #2c3e50;
-  }
-  
-  /* Course section styling */
-  .courses-section {
-    margin-bottom: 20px;
-  }
-  
-  .courses-section h2 {
-    color: #34495e;
-    margin-bottom: 10px;
-  }
-  
-  .courses-section ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .courses-section li {
-    background-color: #3498db;
-    color: white;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .courses-section li:hover {
-    background-color: #2980b9;
-  }
-  
-  /* Selected course section */
-  .selected-course {
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-  }
-  
-  .selected-course h2 {
-    margin-top: 0;
-    color: #2c3e50;
-  }
-  
-  /* Assignments section */
-  .assignments-section h3 {
-    margin-bottom: 10px;
-    color: #8e44ad;
-  }
-  
-  .assignments-section ul {
-    list-style: circle inside;
-    padding: 0;
-    margin: 0 0 15px 0;
-  }
-  
-  .assignments-section li {
-    padding: 5px 0;
-    color: #333;
-  }
-  
-  /* Grades section */
-  .grades-section h3 {
-    margin-bottom: 10px;
-    color: #e67e22;
-  }
-  
-  .grades-section ul {
-    list-style: square inside;
-    padding: 0;
-    margin: 0 0 15px 0;
-  }
-  
-  .grades-section li {
-    padding: 5px 0;
-    color: #333;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  color: #333;
+}
+
+/* Header styling */
+.dashboard-header {
+  width: 100%;
+  background-color: #2196F3;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Content layout */
+.dashboard-content {
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+/* Courses section */
+.courses-section {
+  width: 40%;
+}
+
+.course-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.course-item {
+  background-color: #42A5F5;
+  color: white;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.course-item:hover {
+  background-color: #1E88E5;
+}
+
+/* Course details section */
+.course-details {
+  width: 50%;
+}
+
+.assignments-list,
+.grades-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.assignments-section,
+.grades-section {
+  margin-top: 20px;
+}
+
+.grades-section h3 {
+  color: #4CAF50;
+}
+
