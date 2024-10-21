@@ -1,0 +1,118 @@
+/* General styling for the dashboard container */
+h1{
+  text-align: center;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+.teacher-dashboard {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 50%;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header styles */
+  .teacher-dashboard h1 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Course section styling */
+  .courses-section {
+    color: #444;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  
+  .courses-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .courses-section li {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .courses-section li:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Selected course section */
+  .selected-course {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .selected-course h2 {
+    margin-top: 0;
+    color: #333;
+  }
+  
+  /* Students section */
+  .students-section h3 {
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .students-section ul {
+    list-style: square inside;
+    padding: 0;
+    margin: 0 0 15px 0;
+  }
+  
+  .students-section li {
+    padding: 5px 0;
+    color: #333;
+  }
+  
+  /* Assignments section */
+  .assignments-section h3 {
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .assignments-section ul {
+    list-style: disc inside;
+    padding: 0;
+    margin: 0 0 15px 0;
+  }
+  
+  .assignments-section li {
+    padding: 5px 0;
+    color: #333;
+  }
+  
+  /* Input field styling */
+  .assignments-section input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+  }
+  
+  .assignments-section input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  .course-details {
+    margin-bottom: 20px;
+  }
+    
