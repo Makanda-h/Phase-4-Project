@@ -13,9 +13,6 @@ function StudentDashboard() {
     fetchMockCourses();
   }, []);
 
-  
-
-
   const fetchMockCourses = async () => {
     const mockCourses = [
       { id: 1, name: 'Introduction to React' },
