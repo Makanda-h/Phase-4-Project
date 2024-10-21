@@ -54,51 +54,61 @@ function TeacherDashboard() {
   };
 
   return (
-    <div className="teacher-dashboard">
-      <h1>Teacher Dashboard</h1>
-      <div className="courses-section">
-        <h2>Your Courses</h2>
-        <ul>
-          {courses.map(course => (
-            <li key={course.id} onClick={() => handleCourseSelect(course)}>
-              {course.name}
-            </li>
-          ))}
-        </ul>
-      </div>
-      {selectedCourse && (
-        <div className="selected-course">
-          <h2>{selectedCourse.name}</h2>
-          <div className="students-section">
-            <h3>Enrolled Students</h3>
-            <ul>
-              {students.map(student => (
-                <li key={student.id}>{student.name}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="assignments-section">
-            <h3>Assignments</h3>
-            <ul>
-              {assignments.map(assignment => (
-                <li key={assignment.id}>{assignment.name}</li>
-              ))}
-            </ul>
-            <input 
-              type="text" 
-              placeholder="New assignment name"
-              onKeyPress={(e) => {
-                if (e.key === 'Enter') {
-                  handleAddAssignment(e.target.value);
-                  e.target.value = '';
-                }
-              }}
-            />
-          </div>
-          <GradeInputForm courseId={selectedCourse.id} />
+    <>
+     <h1>Teacher Dashboard</h1>
+      <div className="teacher-dashboard">
+        <div class="courses-section">
+          <h2>Your Courses</h2>
+          <ul>
+            {courses.map((course) => (
+              <li key={course.id} onClick={() => handleCourseSelect(course)}>
+                {course.name}
+              </li>
+            ))}
+          </ul>
         </div>
-      )}
-    </div>
+        <div class="course-details">
+          <h2>Course Details</h2>
+          <p>Select a course</p>
+        </div>
+        <div class="students-section">
+          <h2>Enrolled Students</h2>
+          <p>Select a course to view students</p>
+        </div>
+        {selectedCourse && (
+          <div class="selected-course">
+            <h2>{selectedCourse.name}</h2>
+            <div class="students-section">
+              <h2>Enrolled Students</h2>
+              <ul>
+                {students.map((student) => (
+                  <li key={student.id}>{student.name}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="assignments-section">
+              <h3>Assignments</h3>
+              <ul>
+                {assignments.map((assignment) => (
+                  <li key={assignment.id}>{assignment.name}</li>
+                ))}
+              </ul>
+              <input
+                type="text"
+                placeholder="New assignment name"
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleAddAssignment(e.target.value);
+                    e.target.value = "";
+                  }
+                }}
+              />
+            </div>
+            <GradeInputForm courseId={selectedCourse.id} />
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 

@@ -43,9 +43,7 @@ function StudentDashboard() {
 
   return (
     <div className="student-dashboard">
-      <header className="dashboard-header">
         <h1>Student Dashboard</h1>
-      </header>
       <div className="dashboard-content">
         <div className="courses-section">
           <h2>Your Courses</h2>

@@ -1,4 +1,9 @@
 /* General styling for the dashboard container */
+h1{
+  text-align: center;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
 .teacher-dashboard {
     font-family: Arial, sans-serif;
     padding: 20px;
@@ -7,21 +12,27 @@
     background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
   
   /* Header styles */
   .teacher-dashboard h1 {
     text-align: center;
-    margin-bottom: 30px;
-    color: #333;
+    margin-bottom: 10px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   /* Course section styling */
-  .courses-section {
+  .courses-section, .course-details, .students-section {
     margin-bottom: 20px;
   }
   
-  .courses-section h2 {
+  .courses-section,.course-details, .students-section h2 {
     color: #444;
     margin-bottom: 10px;
   }
@@ -107,4 +118,7 @@
     border-color: #007bff;
     outline: none;
   }
-  
+  .course-details {
+    margin-bottom: 20px;
+  }
+    
