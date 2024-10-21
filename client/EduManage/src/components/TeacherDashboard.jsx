@@ -67,14 +67,6 @@ function TeacherDashboard() {
             ))}
           </ul>
         </div>
-        <div class="course-details">
-          <h2>Course Details</h2>
-          <p>Select a course</p>
-        </div>
-        <div class="students-section">
-          <h2>Enrolled Students</h2>
-          <p>Select a course to view students</p>
-        </div>
         {selectedCourse && (
           <div class="selected-course">
             <h2>{selectedCourse.name}</h2>

@@ -7,14 +7,11 @@ h1{
 .teacher-dashboard {
     font-family: Arial, sans-serif;
     padding: 20px;
-    max-width: 800px;
+    max-width: 50%;
     margin: 0 auto;
     background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
   }
   
   /* Header styles */
@@ -28,13 +25,10 @@ h1{
   }
   
   /* Course section styling */
-  .courses-section, .course-details, .students-section {
-    margin-bottom: 20px;
-  }
-  
-  .courses-section,.course-details, .students-section h2 {
+  .courses-section {
     color: #444;
     margin-bottom: 10px;
+    width: 100%;
   }
   
   .courses-section ul {
