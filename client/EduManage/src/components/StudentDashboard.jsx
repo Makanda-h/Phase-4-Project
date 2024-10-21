@@ -7,11 +7,16 @@ function StudentDashboard() {
   const [assignments, setAssignments] = useState([]);
   const [grades, setGrades] = useState([]);
 
+  
+
   useEffect(() => {
-    fetchCourses();
+    fetchMockCourses();
   }, []);
 
-  const fetchCourses = async () => {
+  
+
+
+  const fetchMockCourses = async () => {
     const mockCourses = [
       { id: 1, name: 'Introduction to React' },
       { id: 2, name: 'Advanced JavaScript' },
