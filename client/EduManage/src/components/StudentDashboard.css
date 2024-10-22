@@ -53,7 +53,7 @@ body {
 }
 
 .course-item {
-  background-color: #42A5F5;
+  background-color: #079cff;
   color: white;
   margin: 10px 0;
   padding: 15px;
@@ -62,9 +62,12 @@ body {
   text-align: center;
   transition: background-color 0.3s;
 }
+.course-item p {
+  color: white;
+}
 
 .course-item:hover {
-  background-color: #1E88E5;
+  background-color: #ffffff;
 }
 
 /* Course details section */
@@ -86,3 +89,4 @@ body {
 .grades-section h3 {
   color: #4CAF50;
 }
+

@@ -10,9 +10,11 @@ function AdminDashboard() {
   const [students, setStudents] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [courses, setCourses] = useState([]);
-  const [newStudent, setNewStudent] = useState({ name: '', email: '', grade: '' });
-  const [newTeacher, setNewTeacher] = useState({ name: '', email: '', subject: '' });
-  const [newCourse, setNewCourse] = useState({ name: '', description: '', credits: 0 });
+  const [newStudent, setNewStudent] = useState({ name: '', email: '', student_id: '' });
+  const [newTeacher, setNewTeacher] = useState({ name: '', email: '', teacher_id: '',user_id: '' });
+  const [newCourse, setNewCourse] = useState({ course_name: '', course_code: '' });
+  const [newCourseName, setNewCourseName] = useState('')
+  const [courseName, setCourseName] = useState('');
 
   useEffect(() => {
     fetchStats();
@@ -23,17 +25,17 @@ function AdminDashboard() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch("/api/admin/stats");
+      const response = await fetch('/api/admin/stats');
       const data = await response.json();
       setStats(data);
     } catch (error) {
-      console.error("Error fetching admin stats:", error);
+      console.error('Error fetching admin stats:', error);
     }
   };
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch('/api/students');
+      const response = await fetch("http://127.0.0.1:5000/students");
       const data = await response.json();
       setStudents(data);
     } catch (error) {
@@ -43,7 +45,7 @@ function AdminDashboard() {
 
   const fetchTeachers = async () => {
     try {
-      const response = await fetch('/api/teachers');
+      const response = await fetch("http://127.0.0.1:5000/teachers");
       const data = await response.json();
       setTeachers(data);
     } catch (error) {
@@ -53,7 +55,7 @@ function AdminDashboard() {
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch('/api/courses');
+      const response = await fetch("http://127.0.0.1:5000/courses");
       const data = await response.json();
       setCourses(data);
     } catch (error) {
@@ -64,15 +66,15 @@ function AdminDashboard() {
   const handleAddStudent = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/students', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("http://127.0.0.1:5000/students", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newStudent),
       });
       if (response.ok) {
         fetchStudents();
         fetchStats();
-        setNewStudent({ name: '', email: '', grade: '' });
+        setNewStudent({ name: '', email: '', student_id: '' });
       }
     } catch (error) {
       console.error('Error adding student:', error);
@@ -81,8 +83,8 @@ function AdminDashboard() {
 
   const handleDeleteStudent = async (id) => {
     try {
-      const response = await fetch(`/api/students/${id}`, {
-        method: 'DELETE',
+      const response = await fetch(`http://127.0.0.1:5000/students/${id}`, {
+        method: "DELETE",
       });
       if (response.ok) {
         fetchStudents();
@@ -96,15 +98,15 @@ function AdminDashboard() {
   const handleAddTeacher = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/teachers', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("http://127.0.0.1:5000/teachers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newTeacher),
       });
       if (response.ok) {
-        fetchTeachers();
+        fetchTeachers()
         fetchStats();
-        setNewTeacher({ name: '', email: '', subject: '' });
+        setNewTeacher({ user_id: '', teacher_id: '', name: '', email: '' });
       }
     } catch (error) {
       console.error('Error adding teacher:', error);
@@ -113,8 +115,8 @@ function AdminDashboard() {
 
   const handleDeleteTeacher = async (id) => {
     try {
-      const response = await fetch(`/api/teachers/${id}`, {
-        method: 'DELETE',
+      const response = await fetch(`http://127.0.0.1:5000/teachers/${id}`, {
+        method: "DELETE",
       });
       if (response.ok) {
         fetchTeachers();
@@ -128,25 +130,26 @@ function AdminDashboard() {
   const handleAddCourse = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/courses', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("http://127.0.0.1:5000/courses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newCourse),
       });
       if (response.ok) {
         fetchCourses();
         fetchStats();
-        setNewCourse({ name: '', description: '', credits: 0 });
+        setNewCourse({ course_name: '', course_code: '' });
       }
     } catch (error) {
       console.error('Error adding course:', error);
     }
   };
+  
 
   const handleDeleteCourse = async (id) => {
     try {
-      const response = await fetch(`/api/courses/${id}`, {
-        method: 'DELETE',
+      const response = await fetch(`http://127.0.0.1:5000/courses/${id}`, {
+        method: "DELETE",
       });
       if (response.ok) {
         fetchCourses();
@@ -156,6 +159,30 @@ function AdminDashboard() {
       console.error('Error deleting course:', error);
     }
   };
+
+  const handleInputChange = (e) => {
+    setCourseName(e.target.value);
+    };
+
+  const handleUpdateCourse = async (id) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/courses/${id}`, {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json', },
+        body: JSON.stringify({ course_name: courseName }),
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      console.log("Course updated successfully:", data);
+      } catch (error) {
+        console.error('Error updating course:', error);
+      }
+  };
+  
 
   return (
     <div className="admin-dashboard">
@@ -183,7 +210,9 @@ function AdminDashboard() {
               type="text"
               id="name"
               value={newStudent.name}
-              onChange={(e) => setNewStudent({ ...newStudent, name: e.target.value })}
+              onChange={(e) =>
+                setNewStudent({ ...newStudent, name: e.target.value })
+              }
               required
             />
           </div>
@@ -193,17 +222,20 @@ function AdminDashboard() {
               type="email"
               id="email"
               value={newStudent.email}
-              onChange={(e) => setNewStudent({ ...newStudent, email: e.target.value })}
+              onChange={(e) =>
+                setNewStudent({ ...newStudent, email: e.target.value })
+              }
               required
             />
           </div>
           <div>
-            <label htmlFor="grade">Grade:</label>
+            <label htmlFor="grade">Student ID</label>
             <input
-              type="number"
               id="grade"
-              value={newStudent.grade}
-              onChange={(e) => setNewStudent({ ...newStudent, grade: e.target.value })}
+              value={newStudent.student_id}
+              onChange={(e) =>
+                setNewStudent({ ...newStudent, student_id: e.target.value })
+              }
               required
             />
           </div>
@@ -214,10 +246,11 @@ function AdminDashboard() {
           <div>
             <label htmlFor="name">Name:</label>
             <input
-              type="text"
               id="name"
               value={newTeacher.name}
-              onChange={(e) => setNewTeacher({ ...newTeacher, name: e.target.value })}
+              onChange={(e) =>
+                setNewTeacher({ ...newTeacher, name: e.target.value })
+              }
               required
             />
           </div>
@@ -227,17 +260,31 @@ function AdminDashboard() {
               type="email"
               id="email"
               value={newTeacher.email}
-              onChange={(e) => setNewTeacher({ ...newTeacher, email: e.target.value })}
+              onChange={(e) =>
+                setNewTeacher({ ...newTeacher, email: e.target.value })
+              }
               required
             />
           </div>
           <div>
-            <label htmlFor="subject">Subject:</label>
+            <label htmlFor="subject">Teacher Id:</label>
             <input
-              type="text"
               id="subject"
-              value={newTeacher.subject}
-              onChange={(e) => setNewTeacher({ ...newTeacher, subject: e.target.value })}
+              value={newTeacher.teacher_id}
+              onChange={(e) =>
+                setNewTeacher({ ...newTeacher, teacher_id: e.target.value })
+              }
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="subject">User Id:</label>
+            <input
+              id="subject"
+              value={newTeacher.user_id}
+              onChange={(e) =>
+                setNewTeacher({ ...newTeacher, user_id: e.target.value })
+              }
               required
             />
           </div>
@@ -250,27 +297,21 @@ function AdminDashboard() {
             <input
               type="text"
               id="name"
-              value={newCourse.name}
-              onChange={(e) => setNewCourse({ ...newCourse, name: e.target.value })}
+              value={newCourse.course_name}
+              onChange={(e) =>
+                setNewCourse({ ...newCourse, course_name: e.target.value })
+              }
               required
             />
           </div>
           <div>
-            <label htmlFor="description">Description:</label>
-            <textarea
-              id="description"
-              value={newCourse.description}
-              onChange={(e) => setNewCourse({ ...newCourse, description: e.target.value })}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="credits">Credits:</label>
+            <label htmlFor="description">Course Code:</label>
             <input
-              type="number"
-              id="credits"
-              value={newCourse.credits}
-              onChange={(e) => setNewCourse({ ...newCourse, credits: e.target.value })}
+              id="description"
+              value={newCourse.course_code}
+              onChange={(e) =>
+                setNewCourse({ ...newCourse, course_code: e.target.value })
+              }
               required
             />
           </div>
@@ -282,8 +323,10 @@ function AdminDashboard() {
         <ul>
           {students.map((student) => (
             <li key={student.id}>
-              {student.name} - {student.email} - {student.grade}
-              <button onClick={() => handleDeleteStudent(student.id)}>Delete</button>
+              {student.name} - {student.email} - {student.student_id}
+              <button onClick={() => handleDeleteStudent(student.id)}>
+                Delete
+              </button>
             </li>
           ))}
         </ul>
@@ -293,8 +336,10 @@ function AdminDashboard() {
         <ul>
           {teachers.map((teacher) => (
             <li key={teacher.id}>
-              {teacher.name} - {teacher.email} - {teacher.subject}
-              <button onClick={() => handleDeleteTeacher(teacher.id)}>Delete</button>
+              {teacher.name} - {teacher.email} - {teacher.teacher_id} - {teacher.user_id}
+              <button onClick={() => handleDeleteTeacher(teacher.id)}>
+                Delete
+              </button>
             </li>
           ))}
         </ul>
@@ -304,7 +349,13 @@ function AdminDashboard() {
         <ul>
           {courses.map((course) => (
             <li key={course.id}>
-              {course.name} - {course.description} - {course.credits} credits
+              {course.course_name} - {course.course_code} 
+              <input
+              type="text"
+              value={courseName}
+              onChange={handleInputChange}
+              />
+              <button onClick={()=> handleUpdateCourse(course.id)}>Update</button>
               <button onClick={() => handleDeleteCourse(course.id)}>Delete</button>
             </li>
           ))}
