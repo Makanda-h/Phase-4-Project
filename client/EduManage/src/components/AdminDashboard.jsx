@@ -22,6 +22,8 @@ function AdminDashboard() {
     fetchTeachers();
     fetchCourses();
   }, []);
+  
+  const API_URL = "https://edumanage-backend.onrender.com";
 
   const fetchStats = async () => {
     try {

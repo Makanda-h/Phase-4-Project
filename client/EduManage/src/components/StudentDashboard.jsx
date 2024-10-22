@@ -47,15 +47,16 @@ function StudentDashboard() {
           {isLoading && <div>Loading courses...</div>}
           {error && <div className="error-message">{error}</div>}
           {!isLoading && !error && (
-            <ul className="course-list">
-              {courses.map(course => (
-                <li key={course.id} className="course-item">
-                  <button>
-                    <p>{course.name}</p>
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <div className="course-list">
+              <h2>Course List</h2>
+              <ul>
+                {courses.map((course) => (
+                  <li key={course.id}>
+                    {course.course_name} - {course.course_code}
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
         </div>
 
@@ -65,7 +66,7 @@ function StudentDashboard() {
             <div className="grades-section">
               <h3>Grades</h3>
               <ul className="grades-list">
-                {grades.map(grade => (
+                {grades.map((grade) => (
                   <li key={grade.id}>
                     {grade.assignmentName}: {grade.grade}
                   </li>
