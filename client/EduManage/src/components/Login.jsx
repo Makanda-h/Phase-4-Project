@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
-
 function Login() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -13,39 +12,54 @@ function Login() {
     e.preventDefault();
     setError('');
 
+    console.log('Attempting login with:', { username, password });
+
     try {
       const response = await fetch("http://127.0.0.1:5000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json"
         },
-        body: JSON.stringify({ email, password }),
+        credentials: 'include',
+        mode: 'cors', // Add this line
+        body: JSON.stringify({ username, password }),
       });
 
+      console.log('Response:', response);
+
       if (!response.ok) {
-        throw new Error('Login failed');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Login failed');
       }
 
       const data = await response.json();
-      localStorage.setItem('token', data.token);
+      console.log('Login successful:', data);
+
       localStorage.setItem('userRole', data.role);
+      localStorage.setItem('isAuthenticated', 'true');
 
       // Redirect based on user role
       switch (data.role) {
         case 'admin':
-          navigate('/admin');
+          navigate('/admin-dashboard');
           break;
         case 'teacher':
-          navigate('/teacher');
+          navigate('/teacher-dashboard');
           break;
         case 'student':
-          navigate('/student');
+          navigate('/student-dashboard');
           break;
         default:
           navigate('/');
       }
     } catch (error) {
-      setError('Invalid email or password. Please try again.');
+      console.error('Login error:', error);
+      if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
+        setError('Unable to connect to the server. Please check if the server is running.');
+      } else {
+        setError(error.message || 'Invalid credentials. Please try again.');
+      }
     }
   };
 
@@ -54,12 +68,12 @@ function Login() {
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="username">Username:</label>
           <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
           />
         </div>
@@ -73,7 +87,7 @@ function Login() {
             required
           />
         </div>
-        {error && <p className="error">{error}</p>}
+        {error && <p className="error" style={{color: 'red'}}>{error}</p>}
         <button type="submit">Login</button>
       </form>
     </div>

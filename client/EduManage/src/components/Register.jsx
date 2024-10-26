@@ -1,11 +1,9 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
 
-
 function Register() {
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState(''); // Changed from name to username
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('student');
@@ -15,42 +13,46 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
     try {
       const response = await fetch("http://127.0.0.1:5000/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json"
         },
-        body: JSON.stringify({ name, email, password, role }),
+        credentials: 'include',  // Add this line
+        mode: 'cors',           // Add this line
+        body: JSON.stringify({ 
+          username,
+          email, 
+          password, 
+          role 
+        }),
       });
-
       if (!response.ok) {
-        throw new Error('Registration failed');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Registration failed');
       }
-
       const data = await response.json();
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('userRole', data.role);
-
-      // Redirect to login page after successful registration
+      console.log('Registration successful:', data);
       navigate('/login');
     } catch (error) {
-      setError('Registration failed. Please try again.');
+      setError(error.message || 'Registration failed. Please try again.');
+      console.error('Registration error:', error);
     }
-  };
+};
 
   return (
     <div className="register-container">
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="username">Username:</label> 
           <input
             type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
           />
         </div>
