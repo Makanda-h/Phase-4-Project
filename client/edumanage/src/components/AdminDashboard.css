@@ -96,7 +96,6 @@
     width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
-    display: block;
   }
   .teacher-list{
     background-color: #dfe6e9;
@@ -115,15 +114,15 @@
     transition: transform 0.3s, box-shadow 0.3s;
   }
   .course-list:hover {
-    transform: scale(1.05);
+    transform: scale(1);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
   }
   .student-list:hover {
-    transform: scale(1.05);
+    transform: scale(1);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
   }
   .teacher-list:hover {
-    transform: scale(1.05);
+    transform: scale(1);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
   }
   ul{
@@ -135,4 +134,16 @@
     display: flex;
     justify-content: space-between;
     margin: 5px;
+  }
+  .button-group > button{
+    margin-left: 10px;
+    font-size: 14px;
+    align-items: center;
+    border-radius: 12px;
+    background-color: #beecff;
+    border-color: black;
+    color: black;
+  }
+  ul{
+    font-size: 18px;
   }

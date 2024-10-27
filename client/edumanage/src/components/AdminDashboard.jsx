@@ -339,10 +339,12 @@ function AdminDashboard() {
             {students.map((student) => (
               <li key={student.id}>
                 {" "}
-                {student.name} - {student.email} - {student.student_id}
-                <button onClick={() => handleDeleteStudent(student.id)}>
-                  Delete
-                </button>
+                {student.name} --- {student.email} -- {student.student_id}
+                <div className="button-group">
+                  <button onClick={() => handleDeleteStudent(student.id)}>
+                    Delete
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
@@ -354,10 +356,12 @@ function AdminDashboard() {
           <ul>
             {teachers.map((teacher) => (
               <li key={teacher.id}>
-                Name: {teacher.name}--- {teacher.email} {" "}
-                <button onClick={() => handleDeleteTeacher(teacher.id)}>
-                  Delete
-                </button>
+                {teacher.name} --- {teacher.email}{" "}
+                <div className="button-group">
+                  <button onClick={() => handleDeleteTeacher(teacher.id)}>
+                    Delete
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
@@ -375,12 +379,14 @@ function AdminDashboard() {
                   value={courseName}
                   onChange={handleInputChange}
                 />
-                <button onClick={() => handleUpdateCourse(course.id)}>
-                  Update
-                </button>
-                <button onClick={() => handleDeleteCourse(course.id)}>
-                  Delete
-                </button>
+                <div className="button-group">
+                  <button onClick={() => handleUpdateCourse(course.id)}>
+                    Update
+                  </button>
+                  <button onClick={() => handleDeleteCourse(course.id)}>
+                    Delete
+                  </button>
+                </div>
               </li>
             ))}
           </ul>

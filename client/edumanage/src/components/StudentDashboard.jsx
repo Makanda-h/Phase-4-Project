@@ -9,7 +9,7 @@ function StudentDashboard() {
   const [error, setError] = useState(null);
   const [selectedButton, setSelectedButton] = useState(null);
 
-  const API_BASE_URL = "http://127.0.0.1:5000/enrollments"; // Replace with your API endpoint
+  const API_BASE_URL = "http://127.0.0.1:5000/courses"; // Replace with your API endpoint
 
   useEffect(() => {
     fetchCourses();
