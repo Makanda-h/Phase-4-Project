@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import './AdminDashboard.css';
+import React, { useState, useEffect } from "react";
+import "./AdminDashboard.css";
 
 function AdminDashboard() {
   const [stats, setStats] = useState({
@@ -10,11 +10,22 @@ function AdminDashboard() {
   const [students, setStudents] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [courses, setCourses] = useState([]);
-  const [newStudent, setNewStudent] = useState({ name: '', email: '', student_id: '' });
-  const [newTeacher, setNewTeacher] = useState({ name: '', email: '', teacher_id: '',user_id: '' });
-  const [newCourse, setNewCourse] = useState({ course_name: '', course_code: '' });
-  const [newCourseName, setNewCourseName] = useState('')
-  const [courseName, setCourseName] = useState('');
+  const [newStudent, setNewStudent] = useState({
+    name: "",
+    email: "",
+    student_id: "",
+  });
+  const [newTeacher, setNewTeacher] = useState({
+    name: "",
+    email: "",
+    teacher_id: "",
+    user_id: "",
+  });
+  const [newCourse, setNewCourse] = useState({
+    course_name: "",
+    course_code: "",
+  });
+  const [courseName, setCourseName] = useState("");
 
   useEffect(() => {
     fetchStats();
@@ -22,16 +33,16 @@ function AdminDashboard() {
     fetchTeachers();
     fetchCourses();
   }, []);
-  
+
   const API_URL = "https://edumanage-backend.onrender.com";
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/api/admin/stats');
+      const response = await fetch("/api/admin/stats");
       const data = await response.json();
       setStats(data);
     } catch (error) {
-      console.error('Error fetching admin stats:', error);
+      console.error("Error fetching admin stats:", error);
     }
   };
 
@@ -39,9 +50,10 @@ function AdminDashboard() {
     try {
       const response = await fetch("http://127.0.0.1:5000/students");
       const data = await response.json();
-      setStudents(data);
+      setStudents(data); //ensuring data is an array
     } catch (error) {
-      console.error('Error fetching students:', error);
+      console.error("Error fetching students:", error);
+      setStudents([]);
     }
   };
 
@@ -49,9 +61,10 @@ function AdminDashboard() {
     try {
       const response = await fetch("http://127.0.0.1:5000/teachers");
       const data = await response.json();
-      setTeachers(data);
+      setTeachers(Array.isArray(data) ? data : []);
     } catch (error) {
-      console.error('Error fetching teachers:', error);
+      console.error("Error fetching teachers:", error);
+      setTeachers([]);
     }
   };
 
@@ -59,9 +72,10 @@ function AdminDashboard() {
     try {
       const response = await fetch("http://127.0.0.1:5000/courses");
       const data = await response.json();
-      setCourses(data);
+      setCourses(Array.isArray(data) ? data : []);
     } catch (error) {
-      console.error('Error fetching courses:', error);
+      console.error("Error fetching courses:", error);
+      setCourses([]);
     }
   };
 
@@ -76,10 +90,10 @@ function AdminDashboard() {
       if (response.ok) {
         fetchStudents();
         fetchStats();
-        setNewStudent({ name: '', email: '', student_id: '' });
+        setNewStudent({ name: "", email: "", student_id: "" });
       }
     } catch (error) {
-      console.error('Error adding student:', error);
+      console.error("Error adding student:", error);
     }
   };
 
@@ -93,25 +107,25 @@ function AdminDashboard() {
         fetchStats();
       }
     } catch (error) {
-      console.error('Error deleting student:', error);
+      console.error("Error deleting student:", error);
     }
   };
 
   const handleAddTeacher = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://127.0.0.1:5000/teachers", {
+      const response = await fetch(`http://127.0.0.1:5000/teachers`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newTeacher),
       });
       if (response.ok) {
-        fetchTeachers()
+        fetchTeachers();
         fetchStats();
-        setNewTeacher({ user_id: '', teacher_id: '', name: '', email: '' });
+        setNewTeacher({ name: "", email: "", teacher_id: "", user_id: "" });
       }
     } catch (error) {
-      console.error('Error adding teacher:', error);
+      console.error("Error adding teacher:", error);
     }
   };
 
@@ -125,7 +139,7 @@ function AdminDashboard() {
         fetchStats();
       }
     } catch (error) {
-      console.error('Error deleting teacher:', error);
+      console.error("Error deleting teacher:", error);
     }
   };
 
@@ -140,13 +154,12 @@ function AdminDashboard() {
       if (response.ok) {
         fetchCourses();
         fetchStats();
-        setNewCourse({ course_name: '', course_code: '' });
+        setNewCourse({ course_name: "", course_code: "" });
       }
     } catch (error) {
-      console.error('Error adding course:', error);
+      console.error("Error adding course:", error);
     }
   };
-  
 
   const handleDeleteCourse = async (id) => {
     try {
@@ -158,20 +171,20 @@ function AdminDashboard() {
         fetchStats();
       }
     } catch (error) {
-      console.error('Error deleting course:', error);
+      console.error("Error deleting course:", error);
     }
   };
 
   const handleInputChange = (e) => {
     setCourseName(e.target.value);
-    };
+  };
 
   const handleUpdateCourse = async (id) => {
     e.preventDefault();
     try {
       const response = await fetch(`http://127.0.0.1:5000/courses/${id}`, {
-        method: 'PATCH',
-        headers: {'Content-Type': 'application/json', },
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ course_name: courseName }),
       });
       if (!response.ok) {
@@ -180,11 +193,10 @@ function AdminDashboard() {
 
       const data = await response.json();
       console.log("Course updated successfully:", data);
-      } catch (error) {
-        console.error('Error updating course:', error);
-      }
+    } catch (error) {
+      console.error("Error updating course:", error);
+    }
   };
-  
 
   return (
     <div className="admin-dashboard">
@@ -322,46 +334,57 @@ function AdminDashboard() {
       </div>
       <div className="student-list">
         <h2>Student List</h2>
-        <ul>
-          {students.map((student) => (
-            <li key={student.id}>
-              {student.name} - {student.email} - {student.student_id}
-              <button onClick={() => handleDeleteStudent(student.id)}>
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
+        <div className="ul-student">
+          <ul>
+            {students.map((student) => (
+              <li key={student.id}>
+                {" "}
+                {student.name} - {student.email} - {student.student_id}
+                <button onClick={() => handleDeleteStudent(student.id)}>
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
       <div className="teacher-list">
         <h2>Teacher List</h2>
-        <ul>
-          {teachers.map((teacher) => (
-            <li key={teacher.id}>
-              {teacher.name} - {teacher.email} - {teacher.teacher_id} - {teacher.user_id}
-              <button onClick={() => handleDeleteTeacher(teacher.id)}>
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
+        <div className="ul-teacher">
+          <ul>
+            {teachers.map((teacher) => (
+              <li key={teacher.id}>
+                Name: {teacher.name}--- {teacher.email} {" "}
+                <button onClick={() => handleDeleteTeacher(teacher.id)}>
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
       <div className="course-list">
         <h2>Course List</h2>
-        <ul>
-          {courses.map((course) => (
-            <li key={course.id}>
-              {course.course_name} - {course.course_code} 
-              <input
-              type="text"
-              value={courseName}
-              onChange={handleInputChange}
-              />
-              <button onClick={()=> handleUpdateCourse(course.id)}>Update</button>
-              <button onClick={() => handleDeleteCourse(course.id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
+        <div>
+          <ul>
+            {courses.map((course) => (
+              <li key={course.id}>
+                {course.course_name} - {course.course_code}
+                <input
+                  type="text"
+                  value={courseName}
+                  onChange={handleInputChange}
+                />
+                <button onClick={() => handleUpdateCourse(course.id)}>
+                  Update
+                </button>
+                <button onClick={() => handleDeleteCourse(course.id)}>
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

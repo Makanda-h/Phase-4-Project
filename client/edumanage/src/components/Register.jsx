@@ -5,7 +5,7 @@ import './Register.css';
 
 
 function Register() {
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('student');
@@ -17,12 +17,12 @@ function Register() {
     setError('');
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/register", {
+      const response = await fetch(`http://127.0.0.1:5000/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password, role }),
+        body: JSON.stringify({ username, email, password, role }),
       });
 
       if (!response.ok) {
@@ -30,7 +30,6 @@ function Register() {
       }
 
       const data = await response.json();
-      localStorage.setItem('token', data.token);
       localStorage.setItem('userRole', data.role);
 
       // Redirect to login page after successful registration
@@ -45,12 +44,12 @@ function Register() {
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="name">User Name:</label>
           <input
             type="text"
             id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
           />
         </div>
@@ -83,6 +82,7 @@ function Register() {
           >
             <option value="student">Student</option>
             <option value="teacher">Teacher</option>
+            <option value="admin">Admin</option>
           </select>
         </div>
         {error && <p className="error">{error}</p>}

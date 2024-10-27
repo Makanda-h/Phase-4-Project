@@ -7,7 +7,6 @@ function TeacherDashboard() {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [students, setStudents] = useState([]);
-  const [assignments, setAssignments] = useState([]);
 
   useEffect(() => {
     // Fetch courses taught by this teacher
@@ -16,13 +15,15 @@ function TeacherDashboard() {
 
   const fetchCourses = async () => {
     // This would be an API call in a real application
-    const mockCourses = [
-      { id: 1, name: 'Introduction to React' },
-      { id: 2, name: 'Advanced JavaScript' },
-    ];
-    setCourses(mockCourses);
+    try {
+      const response = await fetch("http://127.0.0.1:5000/courses");
+      const data = await response.json();
+      setCourses(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+      setCourses([]);
+    }
   };
-
   const fetchStudents = async (courseId) => {
     // This would be an API call in a real application
     const mockStudents = [
@@ -32,25 +33,9 @@ function TeacherDashboard() {
     setStudents(mockStudents);
   };
 
-  const fetchAssignments = async (courseId) => {
-    // This would be an API call in a real application
-    const mockAssignments = [
-      { id: 1, name: 'Midterm Project' },
-      { id: 2, name: 'Final Exam' },
-    ];
-    setAssignments(mockAssignments);
-  };
-
   const handleCourseSelect = (course) => {
     setSelectedCourse(course);
     fetchStudents(course.id);
-    fetchAssignments(course.id);
-  };
-
-  const handleAddAssignment = (assignmentName) => {
-    // This would send a request to the backend in a real application
-    const newAssignment = { id: assignments.length + 1, name: assignmentName };
-    setAssignments([...assignments, newAssignment]);
   };
 
   return (
@@ -77,24 +62,6 @@ function TeacherDashboard() {
                   <li key={student.id}>{student.name}</li>
                 ))}
               </ul>
-            </div>
-            <div class="assignments-section">
-              <h3>Assignments</h3>
-              <ul>
-                {assignments.map((assignment) => (
-                  <li key={assignment.id}>{assignment.name}</li>
-                ))}
-              </ul>
-              <input
-                type="text"
-                placeholder="New assignment name"
-                onKeyPress={(e) => {
-                  if (e.key === "Enter") {
-                    handleAddAssignment(e.target.value);
-                    e.target.value = "";
-                  }
-                }}
-              />
             </div>
             <GradeInputForm courseId={selectedCourse.id} />
           </div>

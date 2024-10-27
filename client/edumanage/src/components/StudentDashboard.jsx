@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import './StudentDashboard.css';
+import React, { useState, useEffect } from "react";
+import "./StudentDashboard.css";
 
 function StudentDashboard() {
   const [courses, setCourses] = useState([]);
@@ -9,38 +9,35 @@ function StudentDashboard() {
   const [error, setError] = useState(null);
   const [selectedButton, setSelectedButton] = useState(null);
 
-  const API_BASE_URL = 'http://127.0.0.1:5000/courses'; // Replace with your API endpoint
+  const API_BASE_URL = "http://127.0.0.1:5000/enrollments"; // Replace with your API endpoint
 
   useEffect(() => {
     fetchCourses();
   }, []);
 
-  const fetchCourses = async () => {
+  const fetchCourses = async (id) => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const response = await fetch(`${API_BASE_URL}`);
-      if (!response.ok) throw new Error('Failed to fetch courses');
-      
+      if (!response.ok) throw new Error("Failed to fetch courses");
+
       const data = await response.json();
       setCourses(data);
     } catch (err) {
-      setError('Error loading courses. Please try again later.');
+      setError("Error loading courses. Please try again later.");
       setCourses([]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleCourseSelect = (course) => {
-  };
+  const handleCourseSelect = (course) => {};
 
   return (
     <div className="student-dashboard">
-      <header className="dashboard-header">
-        <h1>Student Dashboard</h1>
-      </header>
+      <h1>Student Dashboard</h1>
       <div className="dashboard-content">
         <div className="courses-section">
           <h2>Your Courses</h2>

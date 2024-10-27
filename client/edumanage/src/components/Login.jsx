@@ -5,7 +5,6 @@ import './Login.css';
 
 function Login() {
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -46,7 +45,7 @@ function Login() {
           navigate('/');
       }
     } catch (error) {
-      setError('Invalid email or password. Please try again.');
+      setError('Invalid username or password. Please try again.');
     }
   };
 
