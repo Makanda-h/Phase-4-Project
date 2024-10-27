@@ -143,6 +143,7 @@
     background-color: #beecff;
     border-color: black;
     color: black;
+    flex: 1;
   }
   ul{
     font-size: 18px;
