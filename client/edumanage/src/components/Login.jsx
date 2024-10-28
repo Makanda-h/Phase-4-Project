@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Login.css';
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Mail, Lock } from "lucide-react";
+import "./Login.css";
 
 function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     try {
       const response = await fetch("http://127.0.0.1:5000/login", {
@@ -23,29 +23,29 @@ function Login() {
       });
 
       if (!response.ok) {
-        throw new Error('Login failed');
+        throw new Error("Login failed");
       }
 
       const data = await response.json();
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('userRole', data.role);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userRole", data.role);
 
       // Redirect based on user role
       switch (data.role) {
-        case 'admin':
-          navigate('/admin');
+        case "admin":
+          navigate("/admin");
           break;
-        case 'teacher':
-          navigate('/teacher');
+        case "teacher":
+          navigate("/teacher");
           break;
-        case 'student':
-          navigate('/student');
+        case "student":
+          navigate("/student");
           break;
         default:
-          navigate('/');
+          navigate("/");
       }
     } catch (error) {
-      setError('Invalid username or password. Please try again.');
+      setError("Invalid username or password. Please try again.");
     }
   };
 
@@ -53,10 +53,10 @@ function Login() {
     <div className="login-container">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label >Username:</label>
+        <div className="input-group">
           <input
-            type="text"
+            type="username"
+            placeholder="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required

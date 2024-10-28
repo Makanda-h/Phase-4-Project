@@ -196,6 +196,7 @@ function AdminDashboard() {
 
       const data = await response.json();
       console.log("Course updated successfully:", data);
+      fetchCourses();
     } catch (error) {
       console.error("Error updating course:", error);
     }
@@ -383,7 +384,7 @@ function AdminDashboard() {
                   onChange={handleInputChange}
                 />
                 <div className="button-group">
-                  <button onClick={() => handleUpdateCourse(course.id)}>
+                  <button onClick={(e) => handleUpdateCourse(e, course.id)}>
                     Update
                   </button>
                   <button onClick={() => handleDeleteCourse(course.id)}>
